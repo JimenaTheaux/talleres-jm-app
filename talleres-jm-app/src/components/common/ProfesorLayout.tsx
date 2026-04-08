@@ -1,10 +1,13 @@
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
-import { LogOut } from 'lucide-react'
+import { LogOut, Lock } from 'lucide-react'
 import { useAuthStore } from '@/store/authStore'
 import { supabase } from '@/lib/supabase'
+import CambiarContrasenaModal from './CambiarContrasenaModal'
 
 export default function ProfesorLayout() {
   const { perfil, clear } = useAuthStore()
+  const [passModalOpen, setPassModalOpen] = useState(false)
 
   const handleLogout = async () => {
     await supabase.auth.signOut()
@@ -22,12 +25,19 @@ export default function ProfesorLayout() {
         }}
       >
         <span className="font-display font-bold text-white text-base">Talleres JM</span>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1">
           {perfil && (
-            <span className="text-sm font-body text-white/80 hidden sm:block">
+            <span className="text-sm font-body text-white/80 hidden sm:block mr-2">
               {perfil.nombre} {perfil.apellido}
             </span>
           )}
+          <button
+            onClick={() => setPassModalOpen(true)}
+            className="p-2 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors"
+            title="Cambiar contraseña"
+          >
+            <Lock size={18} />
+          </button>
           <button
             onClick={handleLogout}
             className="p-2 rounded-lg text-white/70 hover:bg-white/10 hover:text-white transition-colors"
@@ -52,6 +62,11 @@ export default function ProfesorLayout() {
           <Outlet />
         </div>
       </main>
+
+      <CambiarContrasenaModal
+        open={passModalOpen}
+        onClose={() => setPassModalOpen(false)}
+      />
     </div>
   )
 }
