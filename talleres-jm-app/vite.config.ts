@@ -17,6 +17,10 @@ export default defineConfig({
       workbox: {
         skipWaiting: true,
         clientsClaim: true,
+        // Limpia caches de versiones anteriores del SW al activar la nueva.
+        // Evita que chunks viejos (hashes anteriores) persistan y entren en
+        // conflicto con el index.html nuevo después de un redeploy en Vercel.
+        cleanupOutdatedCaches: true,
 
         // Estrategias de caché en runtime
         runtimeCaching: [

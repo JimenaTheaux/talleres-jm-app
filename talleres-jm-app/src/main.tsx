@@ -4,6 +4,36 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './index.css'
 import App from './App.tsx'
 
+// Cuando Vercel hace un nuevo deploy, los chunks JS cambian de hash.
+// El SW puede servir un index.html viejo que referencia chunks que ya no
+// existen en la nueva versión → "Failed to fetch dynamically imported module".
+// La solución es detectar el error y recargar la página para obtener el
+// index.html nuevo con los hashes correctos.
+function isChunkLoadError(msg: string): boolean {
+  return (
+    msg.includes('Failed to fetch dynamically imported module') ||
+    msg.includes('Importing a module script failed') ||
+    msg.includes('error loading dynamically imported module') ||
+    msg.includes('Unable to preload CSS')
+  )
+}
+
+window.addEventListener('unhandledrejection', (event: PromiseRejectionEvent) => {
+  const msg = String(event.reason?.message ?? event.reason ?? '')
+  if (isChunkLoadError(msg)) {
+    console.warn('[app] chunk load error — recargando para nueva versión', msg)
+    event.preventDefault()
+    window.location.reload()
+  }
+})
+
+window.addEventListener('error', (event: ErrorEvent) => {
+  if (isChunkLoadError(event.message)) {
+    console.warn('[app] chunk load error (global) — recargando', event.message)
+    window.location.reload()
+  }
+})
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
