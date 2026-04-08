@@ -55,6 +55,7 @@ function AppRoutes() {
         <Route element={<ProtectedRoute allowedRoles={['profesor', 'admin', 'superadmin']} />}>
           <Route element={<ProfesorLayout />}>
             <Route path="/mis-horas" element={<MisHorasPage />} />
+            <Route path="/alumnos"   element={<AlumnosPage />} />
           </Route>
         </Route>
 
