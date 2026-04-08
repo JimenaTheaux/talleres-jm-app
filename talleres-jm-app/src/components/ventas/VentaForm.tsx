@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { X, ShoppingBag, ChevronDown } from 'lucide-react'
+import { X, ChevronDown, ShoppingBag } from 'lucide-react'
+import ProductoThumb from '@/components/common/ProductoThumb'
 import { useCreateVenta, useUpdateVenta } from '@/hooks/useVentas'
 import { useProductosActivos } from '@/hooks/useProductos'
 import { useAlumnos } from '@/hooks/useAlumnos'
@@ -61,11 +62,7 @@ function ProductoSelector({
         } ${error ? 'border-error' : ''}`}
       >
         <div className="w-8 h-8 rounded-lg overflow-hidden shrink-0 border border-border bg-card flex items-center justify-center">
-          {selected?.foto_url ? (
-            <img src={selected.foto_url} alt={selected.nombre} className="w-full h-full object-cover" />
-          ) : (
-            <ShoppingBag size={14} className="text-text-muted" />
-          )}
+          <ProductoThumb src={selected?.foto_url} alt={selected?.nombre} />
         </div>
         <div className="flex-1 min-w-0">
           {selected ? (
@@ -102,11 +99,7 @@ function ProductoSelector({
                   }`}
                 >
                   <div className="w-9 h-9 rounded-lg overflow-hidden shrink-0 border border-border bg-surface flex items-center justify-center">
-                    {p.foto_url ? (
-                      <img src={p.foto_url} alt={p.nombre} className="w-full h-full object-cover" loading="lazy" />
-                    ) : (
-                      <ShoppingBag size={14} className="text-text-muted" />
-                    )}
+                    <ProductoThumb src={p.foto_url} alt={p.nombre} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-body font-semibold text-text-primary truncate">

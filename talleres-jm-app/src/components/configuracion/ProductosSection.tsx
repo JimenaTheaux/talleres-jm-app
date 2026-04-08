@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Plus, Pencil, ShoppingBag, Search, AlertCircle } from 'lucide-react'
+import ProductoThumb from '@/components/common/ProductoThumb'
 import { useProductos, useToggleProductoActivo } from '@/hooks/useProductos'
 import { formatCurrency } from '@/lib/utils'
 import { TableSkeleton } from '@/components/common/TableSkeleton'
@@ -113,16 +114,7 @@ export default function ProductosSection() {
               >
                 {/* Thumbnail */}
                 <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 border border-border bg-surface flex items-center justify-center">
-                  {p.foto_url ? (
-                    <img
-                      src={p.foto_url}
-                      alt={p.nombre}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <ShoppingBag size={20} className="text-text-muted" />
-                  )}
+                  <ProductoThumb src={p.foto_url} alt={p.nombre} iconSize={20} />
                 </div>
 
                 {/* Info */}

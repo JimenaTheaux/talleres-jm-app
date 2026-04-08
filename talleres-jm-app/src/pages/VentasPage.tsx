@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ShoppingBag, Plus, AlertCircle, Pencil, Trash2 } from 'lucide-react'
+import ProductoThumb from '@/components/common/ProductoThumb'
 import { useVentas, useDeleteVenta } from '@/hooks/useVentas'
 import { formatCurrency, formatPeriodo, getCurrentPeriodo } from '@/lib/utils'
 import PeriodoPicker from '@/components/common/PeriodoPicker'
@@ -169,16 +170,7 @@ export default function VentasPage() {
                       <td className="text-sm font-body px-4 py-3.5 border-t border-border">
                         <div className="flex items-center gap-2.5">
                           <div className="w-9 h-9 rounded-lg overflow-hidden shrink-0 border border-border bg-surface flex items-center justify-center">
-                            {venta.producto?.foto_url ? (
-                              <img
-                                src={venta.producto.foto_url}
-                                alt={venta.producto.nombre}
-                                className="w-full h-full object-cover"
-                                loading="lazy"
-                              />
-                            ) : (
-                              <ShoppingBag size={14} className="text-text-muted" />
-                            )}
+                            <ProductoThumb src={venta.producto?.foto_url} alt={venta.producto?.nombre} />
                           </div>
                           <div className="min-w-0">
                             <p className="font-semibold text-text-primary truncate">
