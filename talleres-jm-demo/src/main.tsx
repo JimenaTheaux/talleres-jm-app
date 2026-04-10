@@ -1,8 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { inject } from '@vercel/analytics'
 import './index.css'
 import App from './App.tsx'
+
+inject()
 
 // Cuando Vercel hace un nuevo deploy, los chunks JS cambian de hash.
 // El SW puede servir un index.html viejo que referencia chunks que ya no
